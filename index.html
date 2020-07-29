@@ -8,7 +8,7 @@
 <!-- ar.js -->
 <script src='build/ar-nft.js'></script>
 
-<script>THREEx.ArToolkitContext.baseURL = './'</script>
+<!-- <script>THREEx.ArToolkitContext.baseURL = './'</script> -->
 
 <body style='position: absolute; top: 0; left: 0; width: 100%; height: 100%; margin : 0px; overflow: hidden;'>
     <style>
@@ -98,8 +98,8 @@
 
         var arToolkitSource = new THREEx.ArToolkitSource({
             sourceType: 'webcam',
-            sourceWidth: 414,
-            sourceHeight: 736,
+            sourceWidth: 640,
+            sourceHeight: 480,
         })
 
         arToolkitSource.init(function onReady() {
@@ -154,7 +154,7 @@
         // init controls for camera
         var markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
             type: 'nft',
-            descriptorsUrl: 'data/dataNFT/greenlight/greenlight',
+            descriptorsUrl: 'https://avo-content-dev.s3.amazonaws.com/campaign-manager/markers/greenlight/greenlight',
             changeMatrixMode: 'cameraTransformMatrix'
         })
 
@@ -170,15 +170,23 @@
         var threeGLTFLoader = new THREE.GLTFLoader();
         var model;
 
-        threeGLTFLoader.load("./resources/Flamingo.glb", function (gltf) {
+        var modelUrl =
+            "https://avo-content-dev.s3.amazonaws.com/campaign-manager/models/Speeder_for_dev.glb";
+        // "./resources/Flamingo.glb"
+
+        threeGLTFLoader.load(modelUrl, function (gltf) {
             model = gltf.scene.children[0];
             model.name = 'Flamingo';
 
-            var animation = gltf.animations[0];
-            var mixer = new THREE.AnimationMixer(model);
-            mixers.push(mixer);
-            var action = mixer.clipAction(animation);
-            action.play();
+            if (gltf.animations.length) {
+                console.log('adding model animations...');
+                var animation = gltf.animations[0];
+
+                var mixer = new THREE.AnimationMixer(model);
+                mixers.push(mixer);
+                var action = mixer.clipAction(animation);
+                action.play();
+            }
 
             root.matrixAutoUpdate = false;
             root.add(model);
@@ -187,13 +195,9 @@
             model.position.x = 0;
             model.position.y = 0;
 
-            console.log('model.position:', model.position);
-
-            model.scale.z = 0.25;
-            model.scale.x = 0.25;
-            model.scale.y = 0.25;
-
-            console.log('model.scale:', model.scale);
+            model.scale.z = 0.5;
+            model.scale.x = 0.5;
+            model.scale.y = 0.5;
 
             //////////////////////////////////////////////////////////////////////////////////
             //		render the whole thing on the page
