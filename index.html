@@ -6,9 +6,9 @@
 <!-- three.js load GLTF -->
 <script src='vendor/three.js/GLTFLoader.js'></script>
 <!-- ar.js -->
-<script src='../build/ar-nft.js'></script>
+<script src='build/ar-nft.js'></script>
 
-<script>THREEx.ArToolkitContext.baseURL = '../'</script>
+<script>THREEx.ArToolkitContext.baseURL = './'</script>
 
 <body style='position: absolute; top: 0; left: 0; width: 100%; height: 100%; margin : 0px; overflow: hidden;'>
     <style>
@@ -72,11 +72,11 @@
         renderer.setPixelRatio(window.devicePixelRatio);
 
         renderer.setClearColor(new THREE.Color('lightgrey'), 0)
-        renderer.setSize( window.innerWidth, window.innerHeight );
+        renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.domElement.style.position = 'absolute'
         renderer.domElement.style.top = '0px'
         renderer.domElement.style.left = '0px'
-        document.body.appendChild( renderer.domElement );
+        document.body.appendChild(renderer.domElement);
 
         // init scene and camera
         var scene = new THREE.Scene();
@@ -97,32 +97,32 @@
         ////////////////////////////////////////////////////////////////////////////////
 
         var arToolkitSource = new THREEx.ArToolkitSource({
-            sourceType : 'webcam',
+            sourceType: 'webcam',
             sourceWidth: 480,
             sourceHeight: 640,
         })
 
-        arToolkitSource.init(function onReady(){
+        arToolkitSource.init(function onReady() {
             // use a resize to fullscreen mobile devices
-            setTimeout(function() {
+            setTimeout(function () {
                 onResize()
             }, 1000);
         })
 
         // handle resize
-        window.addEventListener('resize', function(){
+        window.addEventListener('resize', function () {
             onResize()
         })
 
         // listener for end loading of NFT marker
-        window.addEventListener('arjs-nft-loaded', function(ev){
-          console.log(ev);
+        window.addEventListener('arjs-nft-loaded', function (ev) {
+            console.log(ev);
         })
 
-        function onResize(){
+        function onResize() {
             arToolkitSource.onResizeElement()
             arToolkitSource.copyElementSizeTo(renderer.domElement)
-            if( arToolkitContext.arController !== null ){
+            if (arToolkitContext.arController !== null) {
                 arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas)
             }
         }
@@ -142,9 +142,9 @@
         })
 
         // initialize it
-        arToolkitContext.init(function onCompleted(){
+        arToolkitContext.init(function onCompleted() {
             // copy projection matrix to camera
-            camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
+            camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
         })
 
         ////////////////////////////////////////////////////////////////////////////////
@@ -153,8 +153,8 @@
 
         // init controls for camera
         var markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
-            type : 'nft',
-            descriptorsUrl : 'data/dataNFT/pinball',
+            type: 'nft',
+            descriptorsUrl: 'data/dataNFT/pinball',
             changeMatrixMode: 'cameraTransformMatrix'
         })
 
@@ -192,7 +192,7 @@
             //		render the whole thing on the page
             //////////////////////////////////////////////////////////////////////////////////
 
-            var animate = function() {
+            var animate = function () {
                 requestAnimationFrame(animate);
 
                 if (mixers.length > 0) {
@@ -205,7 +205,7 @@
                     return;
                 }
 
-                arToolkitContext.update( arToolkitSource.domElement )
+                arToolkitContext.update(arToolkitSource.domElement)
 
                 // update scene.visible if the marker is seen
                 scene.visible = camera.visible;
@@ -215,6 +215,6 @@
 
             requestAnimationFrame(animate);
         }
-    );
+        );
     </script>
 </body>
