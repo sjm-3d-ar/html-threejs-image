@@ -98,8 +98,8 @@
 
         var arToolkitSource = new THREEx.ArToolkitSource({
             sourceType: 'webcam',
-            sourceWidth: 480,
-            sourceHeight: 640,
+            sourceWidth: 414,
+            sourceHeight: 736,
         })
 
         arToolkitSource.init(function onReady() {
@@ -154,7 +154,7 @@
         // init controls for camera
         var markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
             type: 'nft',
-            descriptorsUrl: 'data/dataNFT/pinball/pinball',
+            descriptorsUrl: 'data/dataNFT/greenlight/greenlight',
             changeMatrixMode: 'cameraTransformMatrix'
         })
 
@@ -183,10 +183,17 @@
             root.matrixAutoUpdate = false;
             root.add(model);
 
-            model.position.z = -200;
-            model.position.x = 100;
-            model.position.y = 100;
+            model.position.z = 0;
+            model.position.x = 0;
+            model.position.y = 0;
 
+            console.log('model.position:', model.position);
+
+            model.scale.z = 0.25;
+            model.scale.x = 0.25;
+            model.scale.y = 0.25;
+
+            console.log('model.scale:', model.scale);
 
             //////////////////////////////////////////////////////////////////////////////////
             //		render the whole thing on the page
